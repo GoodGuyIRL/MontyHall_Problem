@@ -1,36 +1,41 @@
-DEFINE MAIN
-
 DEFINE Door USING number AND isCar
-   // CONSTRUCTOR
-   SET THIS number TO number
-   SET THIS isCar TO isCar
-   SET THIS opened TO false
+ // CONSTRUCTOR
+    SET THIS number TO number
+    SET THIS isCar TO isCar
+    SET THIS opened TO false
 ENDDEFINE 
 
 DEFINE Game
    // CONSTRUCTOR
-   SET THIS doors TO []
-   SET THIS doorPicked
-   SET THIS openedGoatDoor
-   SET THIS finalPick
-   SET THIS won
-   // METHODS
+    SET THIS doors TO EMPTY array
+    SET THIS doorPicked
+    SET THIS openedGoatDoor
+    SET THIS finalPick
+    SET THIS won
+ // METHODS
    SEQUENCE CreateDoors
-   SET door1 TO NEW Door WITH 1 AND false
-   SET door2 TO NEW Door WITH 2 AND false
-   SET door3 TO NEW Door WITH 3 AND false
-   SET THIS doors PUSH (door1, door2, door3)
+    SET door1 TO NEW Door WITH 1 AND false
+    SET door2 TO NEW Door WITH 2 AND false
+    SET door3 TO NEW Door WITH 3 AND false
+    SET THIS doors PUSH door1, door2, door3
+   ENDSEQUENCE
+   SEQUENCE setCarInRandomDoor
+    SET carGenerator TO random integer between 1 and 3
+    return carGenerator   
    ENDSEQUENCE
 ENDDEFINE
 
 DEFINE Statistics
-  // CONSTRUCTOR
+ // CONSTRUCTOR
   SET THIS gamesWithSameDoorWon TO []
   SET THIS gamesWithSameDoorLost TO []
   SET THIS gamesWithDoorChangeWon TO []
   SET THIS gamesWithDoorChangeLost TO []
 ENDDEFINE
 
+DEFINE MAIN
+  CREAte STATISTICS
+ENDDEFINE
 
 
 
@@ -38,7 +43,6 @@ ENDDEFINE
 
 
 
-ADD 3 doors and set them to a different number (1 to 3) with the isCar to false.
 
 ADD a randomizer that will change the this.isCar of 1 door to true.
 

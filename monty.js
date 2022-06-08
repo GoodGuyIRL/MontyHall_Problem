@@ -8,13 +8,17 @@ class Statistics {
 }
 class Game {
     constructor() {
+
         this.doors = [];
+        this.doorWithTheCar;
         this.doorPicked;
         this.openedGoatDoor;
         this.finalPick;
         this.won;
 
         this.createDoors();
+        this.setCarInRandomDoor()
+        this.pickARandomDoor()
     }
 
     createDoors() {
@@ -26,10 +30,20 @@ class Game {
     }
 
     setCarInRandomDoor() {
-        let oneToThreeGenerator = Math.floor(Math.random() * 3) + 1
-        return oneToThreeGenerator
+        let carGenerator = Math.floor(Math.random() * 3) + 1
+        this.doorWithTheCar = this.doors[carGenerator - 1]
+        this.doorWithTheCar.isCar = true;
+        return this.doorWithTheCar.isCar
     }
-    //Add any method needed
+    pickARandomDoor() {
+        let pickDoorGenerator = Math.floor(Math.random() * 3) + 1
+        this.doorpicked = this.doors[pickDoorGenerator - 1]
+        return this.doorPicked
+    }
+    openDoorWithGoat() {
+
+    }
+
 }
 class Door {
     constructor(number, isCar) {
