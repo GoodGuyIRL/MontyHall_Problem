@@ -1,0 +1,64 @@
+DEFINE MAIN
+
+DEFINE Door USING number AND isCar
+   // CONSTRUCTOR
+   SET THIS number TO number
+   SET THIS isCar TO isCar
+   SET THIS opened TO false
+ENDDEFINE 
+
+DEFINE Game
+   // CONSTRUCTOR
+   SET THIS doors TO []
+   SET THIS doorPicked
+   SET THIS openedGoatDoor
+   SET THIS finalPick
+   SET THIS won
+   // METHODS
+   SEQUENCE CreateDoors
+   SET door1 TO NEW Door WITH 1 AND false
+   SET door2 TO NEW Door WITH 2 AND false
+   SET door3 TO NEW Door WITH 3 AND false
+   SET THIS doors PUSH (door1, door2, door3)
+   ENDSEQUENCE
+ENDDEFINE
+
+DEFINE Statistics
+  // CONSTRUCTOR
+  SET THIS gamesWithSameDoorWon TO []
+  SET THIS gamesWithSameDoorLost TO []
+  SET THIS gamesWithDoorChangeWon TO []
+  SET THIS gamesWithDoorChangeLost TO []
+ENDDEFINE
+
+
+
+
+
+
+
+
+ADD 3 doors and set them to a different number (1 to 3) with the isCar to false.
+
+ADD a randomizer that will change the this.isCar of 1 door to true.
+
+Automate the following : {
+
+- Select one of the doors.
+- Change one of the doors with the isCar = false to this.opened to true.
+- Decide if you want to select another door or if you stay with the door that was first selected.
+- Open the remaining doors and determine if the door that was selected has the this.isCar = true or false.
+- if the selected door was the same as the door that was first selected and ended up being the door with the this.isCar = true add 1 to the gamesWithSameDoorWon.
+- if the selected door was the same as the door that was first selected and ended up being the door with the this.isCar = false add 1 to the gamesWithSameDoorLost.
+- if the selected door was not the same as the door that was first selected and ended up being the door with the this.isCar = true add 1 to the gamesWithDoorChangeWon.
+- if the selected door was not the same as the door that was first selected and ended up being the door with the this.isCar = false add 1 to the gamesWithDoorChangeLost.
+
+}
+ADD a way to convert the results of the game into a percentage and display the following.
+
+ADD a way to repeat the game.
+
+Repeat the process as many time as specified.
+
+
+ENDDEFINE
