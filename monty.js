@@ -5,9 +5,53 @@ class Statistics {
         this.gamesWithDoorChangeWon = [];
         this.gamesWithDoorChangeLost = [];
 
-    }
-}
 
+    }
+
+    keepCalculator(num) {
+
+        var numberOfWins = 0;
+
+        var total = 0;
+
+        for (let i = 0; i < num; i++) {
+
+            var newGame = new Game()
+
+            newGame.keepDoorForTheFinalPick()
+
+            if (newGame.won == true) {
+
+                numberOfWins++
+
+                total = numberOfWins / num * 100
+            }
+        }
+        return total + "% of games were won by NOT switching door. "
+    }
+
+    changeCalculator(num) {
+        var numberOfWins = 0;
+
+        var total = 0;
+
+        for (let i = 0; i < num; i++) {
+
+            var newGame = new Game()
+
+            newGame.switchDoorForTheFinalPick()
+
+            if (newGame.won == true) {
+
+                numberOfWins++
+
+                total = numberOfWins / num * 100
+            }
+        }
+        return total + "% of games were won by switching door. "
+    }
+
+}
 class Game {
     constructor() {
 
@@ -18,17 +62,6 @@ class Game {
         this.finalPick;
         this.won;
 
-
-
-        // this.createDoors();
-        // this.setCarInRandomDoor();
-        // this.pickARandomDoor();
-        // this.openDoorWithGoat();
-        // this.switchFinalDoorPick();
-        // this.gameWon();
-
-
-        // this.keepFinalDoorPick();
     }
     keepDoorForTheFinalPick() {
         this.createDoors();
@@ -41,7 +74,7 @@ class Game {
 
     }
 
-    changeDoorForTheFinalPick() {
+    switchDoorForTheFinalPick() {
         this.createDoors();
         this.setCarInRandomDoor();
         this.pickARandomDoor();
@@ -67,14 +100,17 @@ class Game {
     pickARandomDoor() {
         this.doorPicked = this.doors[Math.floor(Math.random() * this.doors.length)];
     }
+
     openDoorWithGoat() {
 
-        this.openedGoatDoor = this.doors.filter(door1 => door1.number != this.doorPicked.number && door1.isCar != true)
+        var Result = this.doors.filter(door1 => door1.number != this.doorPicked.number)
+        this.openedGoatDoor = Result.find(door => door.isCar != true);
         this.openedGoatDoor.isOpen = true
     }
 
     switchFinalDoorPick() {
         this.finalPick = this.doors.find(door1 => door1.number != this.doorPicked.number && door1.isOpen != true)
+
     }
 
     keepFinalDoorPick() {
@@ -99,5 +135,7 @@ class Door {
     }
 }
 
-let newGame = new Game()
-console.log(newGame.changeDoorForTheFinalPick())
+var stats = new Statistics()
+
+console.log(stats.keepCalculator(10000))
+console.log(stats.changeCalculator(10000))
