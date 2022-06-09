@@ -5,12 +5,9 @@ class Statistics {
         this.gamesWithDoorChangeWon = [];
         this.gamesWithDoorChangeLost = [];
 
-
     }
 
     keepCalculator(num) {
-
-        var numberOfWins = 0;
 
         var total = 0;
 
@@ -22,16 +19,18 @@ class Statistics {
 
             if (newGame.won == true) {
 
-                numberOfWins++
+                this.gamesWithSameDoorWon++
 
-                total = numberOfWins / num * 100
+                total = this.gamesWithSameDoorWon / num * 100
+            } else {
+
+                this.gamesWithSameDoorLost++
             }
         }
-        return total + "% of games were won by NOT switching door. "
+        return (Math.ceil(total)) + "% of games were won by NOT switching door. "
     }
 
     changeCalculator(num) {
-        var numberOfWins = 0;
 
         var total = 0;
 
@@ -43,12 +42,15 @@ class Statistics {
 
             if (newGame.won == true) {
 
-                numberOfWins++
+                this.gamesWithDoorChangeWon++
 
-                total = numberOfWins / num * 100
+                total = this.gamesWithDoorChangeWon / num * 100
+            } else {
+
+                this.gamesWithDoorChangeLost++
             }
         }
-        return total + "% of games were won by switching door. "
+        return (Math.ceil(total)) + "% of games were won by switching door. "
     }
 
 }
