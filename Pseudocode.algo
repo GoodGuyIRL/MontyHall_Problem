@@ -27,10 +27,10 @@ ENDDEFINE
 
 DEFINE Statistics
  // CONSTRUCTOR
-  SET THIS gamesWithSameDoorWon TO []
-  SET THIS gamesWithSameDoorLost TO []
-  SET THIS gamesWithDoorChangeWon TO []
-  SET THIS gamesWithDoorChangeLost TO []
+  SET THIS gamesWithSameDoorWon TO EMPTY array
+  SET THIS gamesWithSameDoorLost TO EMPTY array
+  SET THIS gamesWithDoorChangeWon TO EMPTY array
+  SET THIS gamesWithDoorChangeLost TO EMPTY array
 ENDDEFINE
 
 DEFINE MAIN

@@ -4,6 +4,7 @@ class Statistics {
         this.gamesWithSameDoorLost = [];
         this.gamesWithDoorChangeWon = [];
         this.gamesWithDoorChangeLost = [];
+
     }
 }
 
@@ -17,13 +18,38 @@ class Game {
         this.finalPick;
         this.won;
 
+
+
+        // this.createDoors();
+        // this.setCarInRandomDoor();
+        // this.pickARandomDoor();
+        // this.openDoorWithGoat();
+        // this.switchFinalDoorPick();
+        // this.gameWon();
+
+
+        // this.keepFinalDoorPick();
+    }
+    keepDoorForTheFinalPick() {
         this.createDoors();
-        this.setCarInRandomDoor()
-        this.pickARandomDoor()
-        this.openDoorWithGoat()
+        this.setCarInRandomDoor();
+        this.pickARandomDoor();
+        this.openDoorWithGoat();
+        this.keepFinalDoorPick();
+        return this.gameWon();
+
 
     }
 
+    changeDoorForTheFinalPick() {
+        this.createDoors();
+        this.setCarInRandomDoor();
+        this.pickARandomDoor();
+        this.openDoorWithGoat();
+        this.switchFinalDoorPick();
+        return this.gameWon();
+
+    }
     createDoors() {
 
         let door1 = new Door(1, false);
@@ -31,36 +57,36 @@ class Game {
         let door3 = new Door(3, false);
 
         this.doors.push(door1, door2, door3);
-
     }
 
     setCarInRandomDoor() {
-
-        let carGenerator = Math.floor(Math.random() * 3) + 1;
-        this.doorWithTheCar = this.doors[carGenerator - 1];
+        this.doorWithTheCar = this.doors[Math.floor(Math.random() * this.doors.length)];
         this.doorWithTheCar.isCar = true;
-        return this.doorWithTheCar.isCar;
-
     }
 
     pickARandomDoor() {
-
-        let pickDoorGenerator = Math.floor(Math.random() * 3) + 1;
-        this.doorpicked = this.doors[pickDoorGenerator - 1];
-        return this.doorPicked;
-
+        this.doorPicked = this.doors[Math.floor(Math.random() * this.doors.length)];
     }
     openDoorWithGoat() {
 
-        var Result = this.doors.filter(door => door.isCar != true);
-        this.openedGoatDoor = Result.find(door => door.number != this.doorPicked)
+        this.openedGoatDoor = this.doors.filter(door1 => door1.number != this.doorPicked.number && door1.isCar != true)
         this.openedGoatDoor.isOpen = true
-        return this.openedGoatDoor.isOpen;
-
     }
 
-    finalDoorPick() {
+    switchFinalDoorPick() {
+        this.finalPick = this.doors.find(door1 => door1.number != this.doorPicked.number && door1.isOpen != true)
+    }
 
+    keepFinalDoorPick() {
+        this.finalPick = this.doorPicked
+    }
+
+    gameWon() {
+        this.won = false;
+        if (this.doorWithTheCar == this.finalPick) {
+            this.won = true;
+        }
+        return this.won
     }
 }
 
@@ -73,6 +99,5 @@ class Door {
     }
 }
 
-let game = new Game()
-
-console.log(game)
+let newGame = new Game()
+console.log(newGame.changeDoorForTheFinalPick())
