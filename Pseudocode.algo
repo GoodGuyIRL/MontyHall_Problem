@@ -2,7 +2,7 @@ DEFINE Door USING number AND isCar
  // CONSTRUCTOR
     SET THIS number TO number
     SET THIS isCar TO isCar
-    SET THIS opened TO false
+    SET THIS isOpen TO false
 ENDDEFINE 
 
 DEFINE Game
@@ -44,11 +44,11 @@ ENDDEFINE
 
 
 
-ADD a randomizer that will change the this.isCar of 1 door to true.
+ADD a randomizer that will change the this.isCar of 1 door to true.//
 
 Automate the following : {
 
-- Select one of the doors.
+- Select one of the doors.//
 - Change one of the doors with the isCar = false to this.opened to true.
 - Decide if you want to select another door or if you stay with the door that was first selected.
 - Open the remaining doors and determine if the door that was selected has the this.isCar = true or false.
