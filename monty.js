@@ -158,5 +158,5 @@ class Door {
 
 var start = new Statistics()
 
-console.log(start.keepCalculator(100))
-console.log(start.changeCalculator(100))
+console.log(start.keepCalculator(1000000))
+console.log(start.changeCalculator(1000000))

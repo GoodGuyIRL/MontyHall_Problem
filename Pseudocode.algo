@@ -1,189 +1,145 @@
 DEFINE Statistics
+  SET THIS gamesWithSameDoorWon TO EMPTY array
+  SET THIS gamesWithSameDoorLost TO EMPTY array
+  SET THIS gamesWithDoorChangeWon TO EMPTY array
+  SET THIS gamesWithDoorChangeLost TO EMPTY array
 
-  SEQUENCE CONSTRUCTOR
+  SEQUENCE keepCalculator USING amountOfGames
+    SET totalWins TO 0
+    SET totalLosses TO 0
+    SET winCount TO 0
+    SET LossCount TO 0
 
-   SET THIS gamesWithSameDoorWon TO EMPTY array
-   SET THIS gamesWithSameDoorLost TO EMPTY array
-   SET THIS gamesWithDoorChangeWon TO EMPTY array
-   SET THIS gamesWithDoorChangeLost TO EMPTY array
+    FOR amountOfGames
+      SET newGame TO NEW Game
+      CALL newGame.keepDoorForTheFinalPick
 
+      IF newGame.won EQUALS true
+
+        PUSH THIS gamesWithSameDoorWon newGame
+        INCREMENT winCount
+        SET totalWins TO winCount DIVIDED by amountOfGames TIMES 100
+
+      ELSE
+        
+        PUSH THIS gamesWithSameDoorLost newGame
+        INCREMENT lossCount
+        SET totalLosses TO LossCount DIVIDED by amountOfGames TIMES 100
+
+      ENDIF
+
+    ENDFOR
+
+    RETURN totalWins AND totalLosses
   ENDSEQUENCE
 
-  SEQUENCE METHODS
+  SEQUENCE changeCalculator USING amountOfGames
+    SET totalWins TO 0
+    SET totalLosses TO 0
+    SET winCount TO 0
+    SET LossCount TO 0
 
-    SEQUENCE keepCalculator USING amountOfGames
+    FOR amountOfGames
 
-     SET totalWins TO 0
-     SET totalLosses TO 0
-     SET winCount TO 0
-     SET LossCount TO 0
+      SET newGame TO NEW Game
+      CALL newGame.switchDoorForTheFinalPick
 
-      FOR amountOfGames
+      IF newGame.won EQUALS true
 
-       SET newGame TO NEW Game
-       CALL newGame.keepDoorForTheFinalPick
+        PUSH THIS gamesWithDoorChangeWon newGame
+        INCREMENT winCount
+        SET totalWins TO winCount DIVIDED by amountOfGames TIMES 100
 
-        IF newGame.won EQUALS true
+      ELSE
+        
+        PUSH THIS gamesWithDoorChangeLost newGame
+        INCREMENT lossCount
+        SET totalLosses TO LossCount DIVIDED by amountOfGames TIMES 100
 
-          PUSH THIS gamesWithSameDoorWon
-          INCREMENT winCount
-          SET totalWins TO winCount DIVIDED by amountOfGames TIMES 100
+      ENDIF
 
-        ELSE
-          
-          PUSH THIS gamesWithSameDoorLost
-          INCREMENT lossCount
-          SET totalLosses TO LossCount DIVIDED by amountOfGames TIMES 100
+    ENDFOR
 
-        ENDIF
+    RETURN totalWins AND totalLosses
+  ENDSEQUENCE
 
-      ENDFOR
-
-     RETURN totalWins AND totalLosses
-
-    ENDSEQUENCE
-
-    SEQUENCE changeCalculator USING amountOfGames
-
-     SET totalWins TO 0
-     SET totalLosses TO 0
-     SET winCount TO 0
-     SET LossCount TO 0
-
-      FOR amountOfGames
-
-       SET newGame TO NEW Game
-       CALL newGame.switchDoorForTheFinalPick
-
-        IF newGame.won EQUALS true
-
-          PUSH THIS gamesWithDoorChangeWon
-          INCREMENT winCount
-          SET totalWins TO winCount DIVIDED by amountOfGames TIMES 100
-
-        ELSE
-          
-          PUSH THIS gamesWithDoorChangeLost
-          INCREMENT lossCount
-          SET totalLosses TO LossCount DIVIDED by amountOfGames TIMES 100
-
-        ENDIF
-
-      ENDFOR
-
-     RETURN totalWins AND totalLosses
-  
-    ENDSEQUENCE
-
-  ENDDEFINE
-
-
+ENDDEFINE
 
 DEFINE Game
+  SET THIS doors TO EMPTY array
+  SET THIS doorWithTheCar
+  SET THIS doorPicked
+  SET THIS openedGoatDoor
+  SET THIS finalPick
+  SET THIS won
+  
+  SEQUENCE keepDoorForTheFinalPick
+    CALL THIS createDoors
+    CALL THIS setCarInRandomDoor
+    CALL THIS pickARandomDoor
+    CALL THIS openDoorWithGoat
+    CALL THIS keepFinalDoorPick
 
-  SEQUENCE CONSTRUCTOR
-
-    SET THIS doors TO EMPTY array
-    SET THIS doorWithTheCar
-    SET THIS doorPicked
-    SET THIS openedGoatDoor
-    SET THIS finalPick
-    SET THIS won
-
+    RETURN THIS gameWon
   ENDSEQUENCE
 
-  SEQUENCE METHODS
+  SEQUENCE switchDoorForTheFinalPick
+    CALL THIS createDoors
+    CALL THIS setCarInRandomDoor
+    CALL THIS pickARandomDoor
+    CALL THIS openDoorWithGoat
+    CALL THIS switchFinalDoorPick
 
-    SEQUENCE keepDoorForTheFinalPick
+    RETURN THIS gameWon
+  ENDSEQUENCE
 
-      CALL THIS createDoors
-      CALL THIS setCarInRandomDoor
-      CALL THIS pickARandomDoor
-      CALL THIS openDoorWithGoat
-      CALL THIS keepFinalDoorPick
-      RETURN THIS gameWon
+  SEQUENCE CreateDoors
+    SET door1 TO NEW Door WITH 1 AND false
+    SET door2 TO NEW Door WITH 2 AND false
+    SET door3 TO NEW Door WITH 3 AND false
 
-    ENDSEQUENCE
+    SET THIS doors PUSH door1, door2, door3
+  ENDSEQUENCE
 
-    SEQUENCE switchDoorForTheFinalPick
+  SEQUENCE setCarInRandomDoor
+    SET THIS doorWithTheCar TO a random number in the array OF THIS doors 
+    SET THIS doorWithTheCar.isCar TO true
+  ENDSEQUENCE
 
-      CALL THIS createDoors
-      CALL THIS setCarInRandomDoor
-      CALL THIS pickARandomDoor
-      CALL THIS openDoorWithGoat
-      CALL THIS switchFinalDoorPick
-      RETURN THIS gameWon
+  SEQUENCE pickARandomDoor
+    SET THIS doorPicked TO a random number in the array OF THIS doors
+  ENDSEQUENCE
 
-    ENDSEQUENCE
+  SEQUENCE openDoorWithGoat
+    SET Result TO a copy OF the array OF THIS doors excluding the doorPicked
+    SET THIS openDoorWithGoat TO the first ELEMENT that corresponds in Result excluding the doorWithTheCar
+    SET THIS openDoorWithGoat.isOpen TO true
+  ENDSEQUENCE 
 
-    SEQUENCE CreateDoors
+  SEQUENCE switchDoorForTheFinalPick
+    SET THIS finalpick TO the first ELEMENT that corresponds in THIS doors array excluding the doorPicked AND the openDoorWithGoat
+  ENDSEQUENCE
 
-      SET door1 TO NEW Door WITH 1 AND false
-      SET door2 TO NEW Door WITH 2 AND false
-      SET door3 TO NEW Door WITH 3 AND false
+  SEQUENCE keepFinalDoorPick
+  SET THIS finalPick TO This doorPicked
+  ENDSEQUENCE
 
-      SET THIS doors PUSH door1, door2, door3
-
-    ENDSEQUENCE
-
-    SEQUENCE setCarInRandomDoor
-
-      SET THIS doorWithTheCar TO a random number in the array OF THIS doors 
-      SET THIS doorWithTheCar.isCar TO true
-
-    ENDSEQUENCE
-
-    SEQUENCE pickARandomDoor
-
-      SET THIS doorPicked TO a random number in the array OF THIS doors
-
-    ENDSEQUENCE
-
-    SEQUENCE openDoorWithGoat
-
-      SET Result TO a copy OF the array OF THIS doors excluding the doorPicked
-      SET THIS openDoorWithGoat TO the first ELEMENT that corresponds in Result excluding the doorWithTheCar
-      SET THIS openDoorWithGoat.isOpen TO true
-
-    ENDSEQUENCE 
-
-    SEQUENCE switchDoorForTheFinalPick
-
-      SET THIS finalpick TO the first ELEMENT that corresponds in THIS doors array excluding the doorPicked AND the openDoorWithGoat
-
-    ENDSEQUENCE
-
-    SEQUENCE keepFinalDoorPick
-
-    SET THIS finalPick TO This doorPicked
-
-    ENDSEQUENCE
-
-    SEQUENCE gameWon
-
+  SEQUENCE gameWon
     SET THIS won TO false
 
-    IF THIS doorWithTheCar EQUALS EQUALS TO THIS finalPick
-
+    IF THIS doorWithTheCar EQUALS EQUALS TO THIS finalPick THEN
       SET THIS won TO true
-
     ENDIF
 
     RETURN THIS won
+  ENDSEQUENCE
 
-    ENDSEQUENCE
-
-
-  
 ENDDEFINE
 
 DEFINE Door USING number AND isCar
-
- SEQUENCE CONSTRUCTOR
-
-    SET THIS number TO number
-    SET THIS isCar TO isCar
-    SET THIS isOpen TO false
+  SET THIS number TO number
+  SET THIS isCar TO isCar
+  SET THIS isOpen TO false
 
 ENDDEFINE 
 
