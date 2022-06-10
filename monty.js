@@ -11,6 +11,8 @@ class Statistics {
 
         var totalWins = 0;
         var totalLosses = 0;
+        var winCount = 0;
+        var lossCount = 0;
 
         for (let i = 0; i < amountOfGames; i++) {
 
@@ -20,14 +22,18 @@ class Statistics {
 
             if (newGame.won == true) {
 
-                this.gamesWithSameDoorWon++
+                this.gamesWithSameDoorWon.push(newGame)
 
-                totalWins = this.gamesWithSameDoorWon / amountOfGames * 100
+                winCount++
+
+                totalWins = winCount / amountOfGames * 100
             } else {
 
-                this.gamesWithSameDoorLost++
+                this.gamesWithSameDoorLost.push(newGame)
 
-                totalLosses = this.gamesWithSameDoorLost / amountOfGames * 100
+                lossCount++
+
+                totalLosses = lossCount / amountOfGames * 100
             }
         }
         return [totalWins.toFixed(2) + "% of games were WON by NOT switching door. ", totalLosses.toFixed(2) + "% of games were LOST by NOT switching door"]
@@ -38,6 +44,8 @@ class Statistics {
 
         var totalWin = 0;
         var totalLosses = 0;
+        var winCount = 0;
+        var lossCount = 0
 
         for (let i = 0; i < amountOfGames; i++) {
 
@@ -47,20 +55,25 @@ class Statistics {
 
             if (newGame.won == true) {
 
-                this.gamesWithDoorChangeWon++
+                this.gamesWithDoorChangeWon.push(newGame)
 
-                totalWin = this.gamesWithDoorChangeWon / amountOfGames * 100
+                winCount++
+
+                totalWin = winCount / amountOfGames * 100
             } else {
 
-                this.gamesWithDoorChangeLost++
+                this.gamesWithDoorChangeLost.push(newGame)
 
-                totalLosses = this.gamesWithDoorChangeLost / amountOfGames * 100
+                lossCount++
+
+                totalLosses = lossCount / amountOfGames * 100
             }
         }
         return [totalWin.toFixed(2) + "% of games were WON by switching door. ", totalLosses.toFixed(2) + "% of games were LOST by switching door . "]
     }
 
 }
+
 class Game {
     constructor() {
 
@@ -145,5 +158,5 @@ class Door {
 
 var start = new Statistics()
 
-console.log(start.keepCalculator(10000000))
-console.log(start.changeCalculator(10000000))
+console.log(start.keepCalculator(100))
+console.log(start.changeCalculator(100))
