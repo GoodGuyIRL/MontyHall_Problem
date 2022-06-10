@@ -9,7 +9,8 @@ class Statistics {
 
     keepCalculator(amountOfGames) {
 
-        var total = 0;
+        var totalWins = 0;
+        var totalLosses = 0;
 
         for (let i = 0; i < amountOfGames; i++) {
 
@@ -21,18 +22,22 @@ class Statistics {
 
                 this.gamesWithSameDoorWon++
 
-                total = this.gamesWithSameDoorWon / amountOfGames * 100
+                totalWins = this.gamesWithSameDoorWon / amountOfGames * 100
             } else {
 
                 this.gamesWithSameDoorLost++
+
+                totalLosses = this.gamesWithSameDoorLost / amountOfGames * 100
             }
         }
-        return total.toFixed(2) + "% of games were won by NOT switching door. "
+        return [totalWins.toFixed(2) + "% of games were WON by NOT switching door. ", totalLosses.toFixed(2) + "% of games were LOST by NOT switching door"]
+
     }
 
     changeCalculator(amountOfGames) {
 
-        var total = 0;
+        var totalWin = 0;
+        var totalLosses = 0;
 
         for (let i = 0; i < amountOfGames; i++) {
 
@@ -44,13 +49,15 @@ class Statistics {
 
                 this.gamesWithDoorChangeWon++
 
-                total = this.gamesWithDoorChangeWon / amountOfGames * 100
+                totalWin = this.gamesWithDoorChangeWon / amountOfGames * 100
             } else {
 
                 this.gamesWithDoorChangeLost++
+
+                totalLosses = this.gamesWithDoorChangeLost / amountOfGames * 100
             }
         }
-        return total.toFixed(2) + "% of games were won by NOT switching door. "
+        return [totalWin.toFixed(2) + "% of games were WON by switching door. ", totalLosses.toFixed(2) + "% of games were LOST by switching door . "]
     }
 
 }
@@ -72,7 +79,6 @@ class Game {
         this.openDoorWithGoat();
         this.keepFinalDoorPick();
         return this.gameWon();
-
 
     }
 
@@ -137,7 +143,7 @@ class Door {
     }
 }
 
-var stats = new Statistics()
+var start = new Statistics()
 
-console.log(stats.keepCalculator(10000000))
-console.log(stats.changeCalculator(10000000))
+console.log(start.keepCalculator(10000000))
+console.log(start.changeCalculator(10000000))
